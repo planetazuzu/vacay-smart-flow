@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,7 +12,7 @@ import Requests from "./pages/Requests";
 import NotFound from "./pages/NotFound";
 import Integrations from "./pages/Integrations";
 import Calendar from "./pages/Calendar";
-import EmployeesPage from "./pages/EmployeesPage";
+import Employees from "./pages/Employees";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,7 @@ const App = () => (
               <Route path="requests" element={<Requests />} />
               <Route path="requests/new" element={<div className="p-4">Nueva solicitud (En desarrollo)</div>} />
               <Route path="requests/:id" element={<div className="p-4">Detalle de solicitud (En desarrollo)</div>} />
-              <Route path="employees" element={<EmployeesPage />} />
+              <Route path="employees" element={<Employees />} />
               <Route path="profile" element={<div className="p-4">Perfil (En desarrollo)</div>} />
               <Route path="settings" element={<div className="p-4">Configuración (En desarrollo)</div>} />
               <Route path="integrations" element={<Integrations />} />
