@@ -114,6 +114,79 @@ export type Database = {
         }
         Relationships: []
       }
+      saldos: {
+        Row: {
+          asuntos_propios_disponibles: number | null
+          id_usuario: string
+          permisos_disponibles: number | null
+          vacaciones_disponibles: number | null
+        }
+        Insert: {
+          asuntos_propios_disponibles?: number | null
+          id_usuario: string
+          permisos_disponibles?: number | null
+          vacaciones_disponibles?: number | null
+        }
+        Update: {
+          asuntos_propios_disponibles?: number | null
+          id_usuario?: string
+          permisos_disponibles?: number | null
+          vacaciones_disponibles?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saldos_id_usuario_fkey"
+            columns: ["id_usuario"]
+            isOneToOne: true
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      solicitudes: {
+        Row: {
+          archivo_url: string | null
+          creado_el: string | null
+          estado: string | null
+          fechas: unknown | null
+          id: string
+          id_usuario: string | null
+          motivo: string | null
+          observaciones: string | null
+          tipo: string | null
+        }
+        Insert: {
+          archivo_url?: string | null
+          creado_el?: string | null
+          estado?: string | null
+          fechas?: unknown | null
+          id?: string
+          id_usuario?: string | null
+          motivo?: string | null
+          observaciones?: string | null
+          tipo?: string | null
+        }
+        Update: {
+          archivo_url?: string | null
+          creado_el?: string | null
+          estado?: string | null
+          fechas?: unknown | null
+          id?: string
+          id_usuario?: string | null
+          motivo?: string | null
+          observaciones?: string | null
+          tipo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "solicitudes_id_usuario_fkey"
+            columns: ["id_usuario"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       twilio_messages: {
         Row: {
           body: string
@@ -180,6 +253,42 @@ export type Database = {
           phone?: string | null
           role?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      usuarios: {
+        Row: {
+          antiguedad: number | null
+          email: string
+          grupo: string | null
+          id: string
+          jornada: string | null
+          nombre: string
+          rol: string | null
+          turno: string | null
+          user_id: string | null
+        }
+        Insert: {
+          antiguedad?: number | null
+          email: string
+          grupo?: string | null
+          id?: string
+          jornada?: string | null
+          nombre: string
+          rol?: string | null
+          turno?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          antiguedad?: number | null
+          email?: string
+          grupo?: string | null
+          id?: string
+          jornada?: string | null
+          nombre?: string
+          rol?: string | null
+          turno?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
