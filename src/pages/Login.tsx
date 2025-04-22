@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -34,7 +33,7 @@ const Login = () => {
           <div className="flex justify-center mb-2">
             <Calendar className="h-12 w-12 text-vacay-700" />
           </div>
-          <h1 className="text-3xl font-bold text-vacay-800">VacaySmart</h1>
+          <h1 className="text-3xl font-bold text-vacay-800">App Vacaciones y Permisos</h1>
           <p className="text-vacay-600">Gestión inteligente de vacaciones y permisos</p>
         </div>
         

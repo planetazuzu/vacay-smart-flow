@@ -22,7 +22,7 @@ const Index = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-vacay-100 to-vacay-50">
         <Calendar className="h-12 w-12 text-vacay-700 animate-pulse" />
-        <h1 className="mt-4 text-xl font-semibold text-vacay-800">Cargando VacaySmart...</h1>
+        <h1 className="mt-4 text-xl font-semibold text-vacay-800">Cargando App Vacaciones y Permisos...</h1>
       </div>
     );
   }
@@ -31,3 +31,4 @@ const Index = () => {
 };
 
 export default Index;
+
