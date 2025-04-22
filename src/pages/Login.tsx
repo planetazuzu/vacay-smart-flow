@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -27,17 +28,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-vacay-100 to-vacay-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-vacay-100 to-vacay-50 dark:from-vacay-900 dark:to-vacay-800 p-4">
       <div className="w-full max-w-md animate-fade-in">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-2">
-            <Calendar className="h-12 w-12 text-vacay-700" />
+            <Calendar className="h-12 w-12 text-vacay-700 dark:text-vacay-300" />
           </div>
-          <h1 className="text-3xl font-bold text-vacay-800">App Vacaciones y Permisos</h1>
-          <p className="text-vacay-600">Gestión inteligente de vacaciones y permisos</p>
+          <h1 className="text-3xl font-bold text-vacay-800 dark:text-vacay-100">App Vacaciones y Permisos</h1>
+          <p className="text-vacay-600 dark:text-vacay-400">Gestión inteligente de vacaciones y permisos</p>
         </div>
         
-        <Card className="border-vacay-200 shadow-lg">
+        <Card className="border-vacay-200 dark:border-vacay-700 shadow-lg">
           <CardHeader>
             <CardTitle>Iniciar sesión</CardTitle>
             <CardDescription>
@@ -71,7 +72,7 @@ const Login = () => {
             <CardFooter>
               <Button 
                 type="submit" 
-                className="w-full bg-vacay-600 hover:bg-vacay-700" 
+                className="w-full bg-vacay-600 hover:bg-vacay-700 text-white" 
                 disabled={isLoading}
               >
                 {isLoading ? 'Cargando...' : 'Iniciar sesión'}
@@ -80,7 +81,7 @@ const Login = () => {
           </form>
         </Card>
         
-        <div className="mt-6 text-center text-sm text-vacay-600">
+        <div className="mt-6 text-center text-sm text-vacay-600 dark:text-vacay-400">
           <p>Para pruebas, use:</p>
           <p>Worker: worker@demo.com</p>
           <p>HR Manager: hr@demo.com</p>
