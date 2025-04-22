@@ -11,6 +11,7 @@ import Requests from "./pages/Requests";
 import NotFound from "./pages/NotFound";
 import Integrations from "./pages/Integrations";
 import Calendar from "./pages/Calendar";
+import EmployeesPage from "./pages/EmployeesPage";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ const App = () => (
               <Route path="requests" element={<Requests />} />
               <Route path="requests/new" element={<div className="p-4">Nueva solicitud (En desarrollo)</div>} />
               <Route path="requests/:id" element={<div className="p-4">Detalle de solicitud (En desarrollo)</div>} />
-              <Route path="employees" element={<div className="p-4">Empleados (En desarrollo)</div>} />
+              <Route path="employees" element={<EmployeesPage />} />
               <Route path="profile" element={<div className="p-4">Perfil (En desarrollo)</div>} />
               <Route path="settings" element={<div className="p-4">Configuración (En desarrollo)</div>} />
               <Route path="integrations" element={<Integrations />} />
