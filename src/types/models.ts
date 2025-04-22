@@ -1,4 +1,3 @@
-
 // User types and models
 export enum UserRole {
   WORKER = "worker",
@@ -86,4 +85,18 @@ export interface ConflictDetection {
   message: string;
   severity: 'low' | 'medium' | 'high';
   suggestions?: string[];
+}
+
+export interface ChatMessage {
+  id: string;
+  text: string;
+  sender: {
+    id: string;
+    name: string;
+  };
+  receiver: {
+    id: string;
+    name: string;
+  };
+  timestamp: Date;
 }

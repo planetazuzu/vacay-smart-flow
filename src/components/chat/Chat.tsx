@@ -1,31 +1,62 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Send } from "lucide-react";
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { ChatMessage } from '@/types/models';
 
-interface Message {
-  id: string;
-  text: string;
-  sender: 'user' | 'other';
-  timestamp: Date;
-}
+// Mock chat history for demonstration - in a real app this would come from a database
+const mockChatHistory: Record<string, ChatMessage[]> = {
+  '1': [
+    {
+      id: '1',
+      text: "Buenos días, ¿podrías revisar mi solicitud de vacaciones?",
+      sender: { id: '1', name: 'Worker Demo' },
+      receiver: { id: '2', name: 'HR Manager Demo' },
+      timestamp: new Date('2024-04-22T09:00:00')
+    },
+    {
+      id: '2',
+      text: "Por supuesto, la revisaré hoy mismo",
+      sender: { id: '2', name: 'HR Manager Demo' },
+      receiver: { id: '1', name: 'Worker Demo' },
+      timestamp: new Date('2024-04-22T09:05:00')
+    }
+  ]
+};
 
 export const Chat = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { user } = useAuth();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSendMessage = () => {
-    if (!newMessage.trim()) return;
+  useEffect(() => {
+    if (user?.id) {
+      // Load chat history for current user
+      const userHistory = mockChatHistory[user.id] || [];
+      setMessages(userHistory);
+    }
+  }, [user?.id]);
 
-    const message: Message = {
+  const handleSendMessage = () => {
+    if (!newMessage.trim() || !user) return;
+
+    const message: ChatMessage = {
       id: Date.now().toString(),
       text: newMessage,
-      sender: 'user',
-      timestamp: new Date(),
+      sender: {
+        id: user.id,
+        name: user.name
+      },
+      receiver: {
+        id: user.role === 'worker' ? '2' : '1', // Mock: workers send to HR, HR sends to worker
+        name: user.role === 'worker' ? 'HR Manager Demo' : 'Worker Demo'
+      },
+      timestamp: new Date()
     };
 
     setMessages((prev) => [...prev, message]);
@@ -38,6 +69,8 @@ export const Chat = () => {
       handleSendMessage();
     }
   };
+
+  const isUserMessage = (message: ChatMessage) => message.sender.id === user?.id;
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -56,13 +89,19 @@ export const Chat = () => {
                 <div
                   key={message.id}
                   className={cn(
-                    "flex max-w-[80%] rounded-lg p-3",
-                    message.sender === 'user' 
+                    "flex flex-col max-w-[80%] rounded-lg p-3",
+                    isUserMessage(message) 
                       ? "ml-auto bg-primary text-primary-foreground" 
                       : "bg-muted"
                   )}
                 >
-                  {message.text}
+                  <div className="text-sm opacity-75 mb-1">
+                    {isUserMessage(message) ? 'Tú' : message.sender.name}
+                  </div>
+                  <div>{message.text}</div>
+                  <div className="text-xs opacity-50 mt-1">
+                    {new Date(message.timestamp).toLocaleTimeString()}
+                  </div>
                 </div>
               ))}
             </div>
@@ -95,3 +134,4 @@ export const Chat = () => {
     </div>
   );
 };
+
