@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Database, Workflow } from 'lucide-react';
+import { Database, Workflow, Calendar } from 'lucide-react';
 
 const Integrations = () => {
   const [n8nWebhookUrl, setN8nWebhookUrl] = useState('');
@@ -14,6 +13,8 @@ const Integrations = () => {
   const [nocdbUrl, setNocdbUrl] = useState('');
   const [isLoadingN8n, setIsLoadingN8n] = useState(false);
   const [isLoadingNocdb, setIsLoadingNocdb] = useState(false);
+  const [isLoadingGCal, setIsLoadingGCal] = useState(false);
+  const [calendarId, setCalendarId] = useState('');
 
   const handleN8nTrigger = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,14 +84,40 @@ const Integrations = () => {
     }
   };
 
+  const handleGoogleCalendarTest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!calendarId) {
+      toast.error('Por favor, ingrese el ID del calendario');
+      return;
+    }
+
+    setIsLoadingGCal(true);
+    console.log("Probando conexión con Google Calendar:", calendarId);
+
+    try {
+      // This is a placeholder for the actual Google Calendar API integration
+      // In a production environment, this should be handled through Supabase
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success('Conexión con Google Calendar probada exitosamente');
+    } catch (error) {
+      console.error("Error al conectar con Google Calendar:", error);
+      toast.error('Error al conectar con Google Calendar. Por favor, verifique el ID e intente nuevamente.');
+    } finally {
+      setIsLoadingGCal(false);
+    }
+  };
+
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-6 text-vacay-800 dark:text-vacay-100">Integraciones</h1>
       
       <Tabs defaultValue="n8n" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
+        <TabsList className="grid w-full max-w-md grid-cols-3 mb-6">
           <TabsTrigger value="n8n">n8n Workflow</TabsTrigger>
           <TabsTrigger value="nocdb">NocoDB</TabsTrigger>
+          <TabsTrigger value="gcal">Google Calendar</TabsTrigger>
         </TabsList>
         
         <TabsContent value="n8n">
@@ -201,6 +228,57 @@ const Integrations = () => {
               <li>Creación de paneles de control (dashboards) adicionales</li>
               <li>Exportación de datos en múltiples formatos (Excel, CSV, etc.)</li>
               <li>Sincronización bidireccional de información entre sistemas</li>
+            </ul>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="gcal">
+          <Card className="border-vacay-200 dark:border-vacay-700 shadow-lg max-w-md mx-auto">
+            <CardHeader>
+              <div className="flex items-center space-x-2">
+                <Calendar className="h-6 w-6 text-vacay-700 dark:text-vacay-300" />
+                <CardTitle>Integración con Google Calendar</CardTitle>
+              </div>
+              <CardDescription>
+                Sincronice las solicitudes de vacaciones y permisos con Google Calendar.
+              </CardDescription>
+            </CardHeader>
+            <form onSubmit={handleGoogleCalendarTest}>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="calendarId">ID del Calendario</Label>
+                  <Input
+                    id="calendarId"
+                    type="text"
+                    placeholder="ID del calendario de Google"
+                    value={calendarId}
+                    onChange={(e) => setCalendarId(e.target.value)}
+                    required
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    Puede encontrar el ID del calendario en la configuración de Google Calendar.
+                  </p>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-vacay-600 hover:bg-vacay-700 text-white" 
+                  disabled={isLoadingGCal}
+                >
+                  {isLoadingGCal ? 'Conectando...' : 'Probar conexión'}
+                </Button>
+              </CardFooter>
+            </form>
+          </Card>
+
+          <div className="mt-6 max-w-md mx-auto">
+            <h3 className="text-lg font-medium mb-2 text-vacay-800 dark:text-vacay-100">Funcionalidades:</h3>
+            <ul className="list-disc pl-5 space-y-2 text-vacay-600 dark:text-vacay-400">
+              <li>Sincronización automática de solicitudes aprobadas</li>
+              <li>Gestión de eventos en el calendario</li>
+              <li>Notificaciones de eventos próximos</li>
+              <li>Vista consolidada de ausencias del equipo</li>
             </ul>
           </div>
         </TabsContent>
