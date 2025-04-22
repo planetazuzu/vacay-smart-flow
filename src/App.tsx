@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import MainLayout from "./components/layout/MainLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Requests from "./pages/Requests";
 import NotFound from "./pages/NotFound";
 import Integrations from "./pages/Integrations";
 
@@ -27,7 +28,7 @@ const App = () => (
               <Route index element={<Navigate to="/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="calendar" element={<div className="p-4">Calendario (En desarrollo)</div>} />
-              <Route path="requests" element={<div className="p-4">Solicitudes (En desarrollo)</div>} />
+              <Route path="requests" element={<Requests />} />
               <Route path="requests/new" element={<div className="p-4">Nueva solicitud (En desarrollo)</div>} />
               <Route path="requests/:id" element={<div className="p-4">Detalle de solicitud (En desarrollo)</div>} />
               <Route path="employees" element={<div className="p-4">Empleados (En desarrollo)</div>} />
