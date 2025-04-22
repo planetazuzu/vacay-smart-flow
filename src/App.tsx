@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Integrations from "./pages/Integrations";
 import Calendar from "./pages/Calendar";
 import Employees from "./pages/Employees";
+import NewRequest from "./pages/NewRequest";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ const App = () => (
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="calendar" element={<Calendar />} />
               <Route path="requests" element={<Requests />} />
-              <Route path="requests/new" element={<div className="p-4">Nueva solicitud (En desarrollo)</div>} />
+              <Route path="requests/new" element={<NewRequest />} />
               <Route path="requests/:id" element={<div className="p-4">Detalle de solicitud (En desarrollo)</div>} />
               <Route path="employees" element={<Employees />} />
               <Route path="profile" element={<div className="p-4">Perfil (En desarrollo)</div>} />
