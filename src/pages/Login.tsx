@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Calendar } from 'lucide-react';
+import { Calendar, Lock, User } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,14 +18,28 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Add more precise validation
+    if (!email.trim()) {
+      toast.error('Por favor, ingrese su correo electrónico');
+      return;
+    }
+
+    if (!password.trim()) {
+      toast.error('Por favor, ingrese su contraseña');
+      return;
+    }
+
     try {
       await login(email, password);
-      toast.success('Login successful!');
+      toast.success('Sesión iniciada exitosamente');
       navigate('/dashboard');
     } catch (error) {
-      toast.error('Invalid email or password');
+      toast.error('Correo electrónico o contraseña incorrectos');
     }
   };
+
+  // Determine if the submit button should be disabled
+  const isSubmitDisabled = isLoading || !email.trim() || !password.trim();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-vacay-100 to-vacay-50 dark:from-vacay-900 dark:to-vacay-800 p-4">
@@ -49,31 +63,39 @@ const Login = () => {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Correo electrónico</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="ejemplo@empresa.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="ejemplo@empresa.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Contraseña</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
               </div>
             </CardContent>
             <CardFooter>
               <Button 
                 type="submit" 
                 className="w-full bg-vacay-600 hover:bg-vacay-700 text-white" 
-                disabled={isLoading}
+                disabled={isSubmitDisabled}
               >
                 {isLoading ? 'Cargando...' : 'Iniciar sesión'}
               </Button>
