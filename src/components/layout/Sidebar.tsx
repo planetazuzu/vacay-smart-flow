@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types/models';
-import { Calendar, ClipboardList, Users, BarChart, Settings, User, FileText } from 'lucide-react';
+import { Calendar, ClipboardList, Users, BarChart, Settings, User, FileText, UserPlus } from 'lucide-react';
 
 export const Sidebar = () => {
   const { user } = useAuth();
@@ -25,6 +24,7 @@ export const Sidebar = () => {
   const hrLinks = [
     { name: 'Dashboard', path: '/dashboard', icon: BarChart },
     { name: 'Empleados', path: '/employees', icon: Users },
+    { name: 'Añadir Empleado', path: '/employees/new', icon: UserPlus },
     { name: 'Solicitudes', path: '/requests', icon: ClipboardList },
     { name: 'Calendario', path: '/calendar', icon: Calendar },
     { name: 'Configuración', path: '/settings', icon: Settings },

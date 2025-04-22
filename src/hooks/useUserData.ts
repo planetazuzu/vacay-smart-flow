@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { User } from '@/types/models';
+import { User, UserRole, ShiftType, WorkdayType, WorkGroup } from '@/types/models';
 
 export const useUserData = (userId: string | undefined) => {
   return useQuery({
@@ -20,7 +20,18 @@ export const useUserData = (userId: string | undefined) => {
         throw error;
       }
       
-      return data as User;
+      // Map Supabase user data to our User type
+      return {
+        id: data.id,
+        name: data.nombre,
+        email: data.email,
+        role: data.rol as UserRole,
+        shift: data.turno as ShiftType,
+        workday: data.jornada as WorkdayType,
+        department: data.grupo || '',
+        workGroup: data.grupo as WorkGroup,
+        seniority: data.antiguedad || 0
+      } as User;
     },
     enabled: !!userId
   });

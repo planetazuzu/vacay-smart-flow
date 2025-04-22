@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,7 @@ import Integrations from "./pages/Integrations";
 import Calendar from "./pages/Calendar";
 import Employees from "./pages/Employees";
 import NewRequest from "./pages/NewRequest";
+import AddUser from "./pages/AddUser"; // New import
 
 const queryClient = new QueryClient();
 
@@ -35,6 +37,7 @@ const App = () => (
               <Route path="requests/new" element={<NewRequest />} />
               <Route path="requests/:id" element={<div className="p-4">Detalle de solicitud (En desarrollo)</div>} />
               <Route path="employees" element={<Employees />} />
+              <Route path="employees/new" element={<AddUser />} /> {/* New route */}
               <Route path="profile" element={<div className="p-4">Perfil (En desarrollo)</div>} />
               <Route path="settings" element={<div className="p-4">Configuración (En desarrollo)</div>} />
               <Route path="integrations" element={<Integrations />} />
