@@ -80,6 +80,37 @@ export default {
           approved: '#22c55e',
           rejected: '#ef4444',
           warning: '#f97316',
+        },
+        corporate: {
+          green: {
+            DEFAULT: '#6CA63C',
+            50: '#f0f9ea',
+            100: '#dbf2ce',
+            200: '#c1e9a4',
+            300: '#a1dc77',
+            400: '#6CA63C',
+            500: '#5b8f33',
+            600: '#4a7629',
+            700: '#3a5d21',
+            800: '#2a4618',
+            900: '#1a2e10',
+          },
+          gray: {
+            DEFAULT: '#71787D',
+            50: '#f5f6f7',
+            100: '#e7e9ea',
+            200: '#d1d5d8',
+            300: '#b8bec3',
+            400: '#71787D',
+            500: '#5a6066',
+            600: '#464b50',
+            700: '#353a3e',
+            800: '#24292d',
+            900: '#141719',
+          },
+          white: {
+            DEFAULT: '#FFFFFF',
+          }
         }
       },
       borderRadius: {
