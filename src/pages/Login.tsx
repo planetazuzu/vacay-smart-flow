@@ -107,9 +107,9 @@ const Login = () => {
         
         <div className="mt-6 text-center text-sm text-corporate-green-600 dark:text-corporate-green-400">
           <p>Para pruebas, use:</p>
-          <p>Worker: worker@demo.com</p>
-          <p>HR Manager: hr@demo.com</p>
-          <p>Contraseña: password</p>
+          <p>Email: worker@vacay-app.com</p>
+          <p>o Email: hr@vacay-app.com</p>
+          <p>Contraseña: vacay2023</p>
         </div>
       </div>
     </div>
