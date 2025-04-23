@@ -10,8 +10,8 @@ interface AuthContextType {
   session: Session | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<any>;
+  logout: () => Promise<void>;
   error: string | null;
 }
 
@@ -28,6 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         if (!session) {
           localStorage.removeItem('vacay_user');
@@ -37,6 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session?.user?.email);
       setSession(session);
       setIsLoading(false);
     });
@@ -49,13 +51,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('Attempting login with:', email);
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Login error:', error.message);
+        setError(error.message);
+        throw error;
+      }
+      
+      console.log('Login successful:', data);
+      return data;
     } catch (err) {
+      console.error('Login exception:', err);
       setError((err as Error).message);
       throw err;
     } finally {
@@ -64,6 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
+    console.log('Logging out...');
     await supabase.auth.signOut();
   };
 

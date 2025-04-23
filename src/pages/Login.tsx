@@ -18,7 +18,6 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Add more precise validation
     if (!email.trim()) {
       toast.error('Por favor, ingrese su correo electrónico');
       return;
@@ -30,11 +29,14 @@ const Login = () => {
     }
 
     try {
-      await login(email, password);
+      console.log('Intentando iniciar sesión con:', email, password);
+      const result = await login(email, password);
+      console.log('Resultado del login:', result);
       toast.success('Sesión iniciada exitosamente');
       navigate('/dashboard');
     } catch (error) {
-      toast.error('Correo electrónico o contraseña incorrectos');
+      console.error('Error de inicio de sesión:', error);
+      toast.error('Error al iniciar sesión. Verifique sus credenciales.');
     }
   };
 
