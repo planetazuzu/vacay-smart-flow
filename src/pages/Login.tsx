@@ -12,11 +12,13 @@ import { Calendar, Lock, User } from 'lucide-react';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
     
     if (!email.trim()) {
       toast.error('Por favor, ingrese su correo electrónico');
@@ -29,13 +31,14 @@ const Login = () => {
     }
 
     try {
-      console.log('Intentando iniciar sesión con:', email, password);
+      console.log('Intentando iniciar sesión con:', email);
       const result = await login(email, password);
       console.log('Resultado del login:', result);
       toast.success('Sesión iniciada exitosamente');
       navigate('/dashboard');
     } catch (error) {
       console.error('Error de inicio de sesión:', error);
+      setErrorMessage('Correo electrónico o contraseña incorrectos');
       toast.error('Error al iniciar sesión. Verifique sus credenciales.');
     }
   };
@@ -92,8 +95,13 @@ const Login = () => {
                   />
                 </div>
               </div>
+              {errorMessage && (
+                <div className="p-2 bg-red-50 text-red-600 text-sm rounded border border-red-200 text-center">
+                  {errorMessage}
+                </div>
+              )}
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex flex-col">
               <Button 
                 type="submit" 
                 className="w-full bg-corporate-green-600 hover:bg-corporate-green-700 text-white" 
@@ -106,7 +114,7 @@ const Login = () => {
         </Card>
         
         <div className="mt-6 text-center text-sm text-corporate-green-600 dark:text-corporate-green-400">
-          <p>Para pruebas, use:</p>
+          <p className="font-semibold">Para pruebas, use:</p>
           <p>Email: worker@vacay-app.com</p>
           <p>o Email: hr@vacay-app.com</p>
           <p>Contraseña: vacay2023</p>
